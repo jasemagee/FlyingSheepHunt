@@ -9,11 +9,7 @@ class Player
     @half_height = (@image.height / 2)
   end
 
-  def warp(x, y)
-    @x, @y = x, y
-  end
-
-  def move(mouse_x, mouse_y)
+  def update(mouse_x, mouse_y)
     @x = mouse_x - @half_width
     @y = mouse_y - @half_height
 
@@ -24,11 +20,7 @@ class Player
     @y = (480 - @image.height) if @y > (480 - @image.height)
   end
 
-  def fullscreen?()
-    true
-  end
-
   def draw
-    @image.draw(@x, @y, 1)
+    @image.draw(@x, @y, 2)
   end
 end
