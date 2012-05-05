@@ -23,8 +23,8 @@ class GameWindow < Gosu::Window
 		
 		@player = Player.new(self)
 
-		# We keep the sheep image here, so we only load it into memory once
-		# and pass it into the sheep instances
+		# We keep the sheep image and bloot splat here, so we only load them into memory once
+		# and pass them into the sheep instances
 		@sheep_image = Gosu::Image.new(self, "assets/sheep.png", false)
 		@blood_splat_image = Gosu::Image.new(self, "assets/blood_splat.png", false)
 		@sheep = Array.new

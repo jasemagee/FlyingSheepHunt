@@ -70,16 +70,6 @@ class Sheep
 	TOP_COLOR = Gosu::Color.new(0xFF1EB1FA)
 
 	def draw
-
-		#if @dir == :left then
-		#	offs_x = -25
-		#	factor = 1.0
-		#else
-		#	offs_x = 25
-		#	factor = -1.0
-		#end
-		#@cur_image.draw(@x + offs_x, @y - 49, 0, factor, 1.0)
-
 		if @spawned && !@escaped
 			if @alive
 				if @direction == 1
