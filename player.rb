@@ -3,8 +3,8 @@ require 'gosu'
 class Player
 
 
-  def initialize(window)
-    @window = window
+  def initialize(window, state)
+    @state = state
     @image = Gosu::Image.new(window, "assets/crosshair.png", false)
     @x = @y = 0.0
     @move_speed = 5
@@ -13,7 +13,7 @@ class Player
   end
 
   def fire
-    sheep_shot = @window.sheep.detect { |s| s.is_shot?(@x, @y) }
+    sheep_shot = @state.sheep.detect { |s| s.is_shot?(@x, @y) }
 
     if sheep_shot
       sheep_shot.kill

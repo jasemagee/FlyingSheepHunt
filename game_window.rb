@@ -1,57 +1,41 @@
 require 'gosu'
-require_relative 'player'
-require_relative 'sheep'
+require_relative 'main_menu_state'
+require_relative 'gameplay_state'
 
 class GameWindow < Gosu::Window
 
 	WINDOW_WIDTH = 640
 	WINDOW_HEIGHT = 480
-	MAX_SHEEP_COUNT = 25
 
-	attr_accessor :sheep
-
+	attr_accessor :cursor
+	
 	def initialize
 		super WINDOW_WIDTH, WINDOW_HEIGHT, false 
-		#Increasing the update_interval doesn't improve frame rate??
+		# Changing the update_interval doesn't improve frame rate?? 
+		# I can lower the frame rate, but not increase
+
+		self.cursor = false
 
 		self.caption = "Flying Sheep Hunt"
 
 		@last_update = Gosu::milliseconds
 		@delta = 0
 
-		@background_image = Gosu::Image.new(self, 'assets/background.png', false)
-		
-		@player = Player.new(self)
+		set_state(MainMenuState.new(self))
+	end
 
-		# We keep the sheep image and bloot splat here, so we only load them into memory once
-		# and pass them into the sheep instances
-		@sheep_image = Gosu::Image.new(self, "assets/sheep.png", false)
-		@blood_splat_image = Gosu::Image.new(self, "assets/blood_splat.png", false)
-		@sheep = Array.new
+	def needs_cursor?
+		@cursor
+	end
 
-		(1..MAX_SHEEP_COUNT).each { @sheep.push(Sheep.new(self, @sheep_image, @blood_splat_image)) }
-
-		@score = 0
-		@lives = 10
+	def set_state(new_state)
+		@current_state = new_state
 	end
 
 	def update	
 		calculate_delta
-
-		if rand(100) < 4
-			match  = @sheep.detect { |s| !s.spawned }
-
-			if match
-				match.spawn
-			end
-		end
-
-
-
-		@player.update(mouse_x, mouse_y)
-		@sheep.each { |s| s.update(@delta) }
+		@current_state.update(@delta)
 	end
-
 
 	def calculate_delta
 		this_update = Gosu::milliseconds
@@ -61,22 +45,12 @@ class GameWindow < Gosu::Window
 
 	def draw
 		#puts Gosu::fps
-
-		@background_image.draw(0,0,0)
-		@sheep.each {|s| s.draw }
-		@player.draw
+		@current_state.draw
 	end
 
 	def button_down(id)
-		if id == Gosu::KbEscape
-			close
-		end
-
-		if id == Gosu::MsLeft
-			@player.fire
-		end
+		@current_state.button_down(id)
 	end
-
 
 end
 
