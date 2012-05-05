@@ -5,17 +5,23 @@ require_relative 'state_base'
 
 class GameplayState < StateBase
 
-	MAX_SHEEP_COUNT = 25
+	SHEEP_INCREMENT = 2
+	MAX_LEVEL = 15
+	SCORE_PER_KILL = 100
+	SECONDS_PER_LEVEL = 10
 
 	attr_accessor :sheep
+	attr_reader :window, :time_playing
+
 
 	def initialize(window)
 		super window
 
 		@window.cursor = false
+		
 		@background_image = Gosu::Image.new(@window, 'assets/background.png', false)
 		
-		@player = Player.new(@window, self)
+		@player = Player.new(self)
 
 		# We keep the sheep image and bloot splat here, so we only load them into memory once
 		# and pass them into the sheep instances
@@ -23,14 +29,28 @@ class GameplayState < StateBase
 		@blood_splat_image = Gosu::Image.new(@window, "assets/blood_splat.png", false)
 		@sheep = Array.new
 
-		(1..MAX_SHEEP_COUNT).each { @sheep.push(Sheep.new(@window, @sheep_image, @blood_splat_image)) }
+		max_sheep_count = MAX_LEVEL * SHEEP_INCREMENT
 
+		(1..max_sheep_count).each { @sheep.push(Sheep.new(self, @sheep_image, @blood_splat_image)) }
+
+		@time_playing = 0.0
 		@score = 0
 		@lives = 10
+
+		@current_level_index = 1
 	end
 
 	def update(delta) 
-		if rand(100) < 4
+		@time_playing += delta
+
+		if @time_playing >= (SECONDS_PER_LEVEL * @current_level_index)
+			@current_level_index += 1
+			puts "Level Increased to #{@current_level_index}"
+		end
+
+		alive_sheep = @sheep.select { |s| s.alive }
+
+		if alive_sheep.size < (@current_level_index * SHEEP_INCREMENT)
 			match  = @sheep.detect { |s| !s.spawned }
 
 			if match
@@ -46,6 +66,22 @@ class GameplayState < StateBase
 		@background_image.draw(0,0,0)
 		@sheep.each {|s| s.draw }
 		@player.draw
+	end
+
+	def sheep_killed
+		@score += SCORE_PER_KILL * @current_level_index
+
+		puts "Score #{@score}"
+	end
+
+	def sheep_escaped
+		@lives -= 1
+
+		puts "Lives: #{@lives}"
+
+		if @lives <= 0
+			# game over
+		end
 	end
 
 	def button_down(id)

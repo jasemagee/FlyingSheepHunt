@@ -3,9 +3,9 @@ require 'gosu'
 class Player
 
 
-  def initialize(window, state)
+  def initialize(state)
     @state = state
-    @image = Gosu::Image.new(window, "assets/crosshair.png", false)
+    @image = Gosu::Image.new(@state.window, "assets/crosshair.png", false)
     @x = @y = 0.0
     @move_speed = 5
     @half_width = (@image.width / 2)

@@ -4,18 +4,18 @@ class Sheep
 
 	SPEED = 100
 
-	attr_accessor :escaped, :alive, :spawned
+	attr_accessor :alive, :spawned
 
-	def initialize(window, sheep_image, blood_splat_image)
-		@window = window	
+	def initialize(state, sheep_image, blood_splat_image)
+		@state = state	
 		@sheep_image = sheep_image 
 		@blood_splat_image = blood_splat_image		
-		@x = @y = @direction = 0
-		@alive = @escaped = @spawned = false
+		@x = @y = @direction = @time_of_death = 0
+		@alive = @spawned = false
 	end
 
 	def is_shot?(x, y)
-		if @alive && !@escaped
+		if @alive
 			if x >= @x && x <= (@x + @sheep_image.width) &&
 				y >= @y && y <= (@y + @sheep_image.height)
 				true
@@ -28,16 +28,18 @@ class Sheep
 	end
 
 	def kill
+		@state.sheep_killed
 		@alive = false
+		@time_of_death = @state.time_playing
 	end
 
 	def escape
-		@escaped = true
+		@state.sheep_escaped
+		@spawned = false
 	end
 
 	def spawn
 		@spawned = @alive = true
-		@escaped = false
 
 		@direction = rand(2)
 
@@ -52,7 +54,7 @@ class Sheep
 	end
 
 	def update(delta)
-		if @alive
+		if @alive && @spawned
 			if @direction == 1
 				if @x >= 640
 					escape
@@ -65,12 +67,19 @@ class Sheep
 
 			@x += @direction * SPEED * delta
 		end
+
+		if !@alive && @spawned
+			if @state.time_playing >= @time_of_death + 3
+				@time_of_death = 0
+				@spawned = false
+			end
+		end
 	end
 
 	TOP_COLOR = Gosu::Color.new(0xFF1EB1FA)
 
 	def draw
-		if @spawned && !@escaped
+		if @spawned
 			if @alive
 				if @direction == 1
 					factor = -1
