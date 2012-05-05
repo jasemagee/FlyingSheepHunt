@@ -1,12 +1,28 @@
 require 'gosu'
 
 class Player
+
+
   def initialize(window)
+    @window = window
     @image = Gosu::Image.new(window, "assets/crosshair.png", false)
     @x = @y = 0.0
     @move_speed = 5
     @half_width = (@image.width / 2)
     @half_height = (@image.height / 2)
+  end
+
+  def fire
+    sheep_shot = @window.sheep.detect { |s| s.is_shot?(@x, @y) }
+
+    if sheep_shot
+      sheep_shot.kill
+    end
+    # If enough time passed since last shot
+    # Play fire sound
+    # Reset last fire time
+    # Loop over sheep, finding any that are hit
+    # If hit, call sheep kill
   end
 
   def update(mouse_x, mouse_y)
@@ -21,6 +37,7 @@ class Player
   end
 
   def draw
-    @image.draw(@x, @y, 2)
+    @image.draw(@x, @y, 3)
   end
+
 end
