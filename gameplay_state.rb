@@ -21,10 +21,8 @@ class GameplayState < StateBase
 		super window
 
 		@window.cursor = false
-		@paused = false
-		
-		@background_image = Gosu::Image.new(@window, 'assets/background.png', false)
-		
+		@paused = false	
+
 		@player = Player.new(self)
 
 		# We keep the sheep image and bloot splat here, so we only load them into memory once
@@ -72,8 +70,7 @@ class GameplayState < StateBase
 		end
 	end
 
-	def draw 		
-		@background_image.draw(0, 0, GameplayZOrder::Background)
+	def draw 				
 		@sheep.each {|s| s.draw }
 		@player.draw
 
@@ -94,6 +91,10 @@ class GameplayState < StateBase
 			@window.width / 2, @window.height / 2, GameplayZOrder::Gui, #x, y, z
 			0.5, 0.5, #rel_x, rel_y
 			1.0, 1.0, GUI_COLOR)
+			@gui_font.draw_rel('P to resume; Esc to exit', 
+			@window.width / 2, (@window.height / 2) + @gui_font.height, GameplayZOrder::Gui, #x, y, z
+			0.5, 0.5, #rel_x, rel_y
+			1.0, 1.0, GUI_COLOR)
 		end
 	end
 
@@ -109,19 +110,20 @@ class GameplayState < StateBase
 	end
 
 	def button_down(id)
-		if id == Gosu::KbEscape
-			@window.close
+
+		if @paused
+			if id == Gosu::KbEscape
+				@window.set_state(MainMenuState.new(@window))
+			end			
+		else		
+			if id == Gosu::MsLeft			
+				@player.fire
+			end
 		end
 
-			if id == Gosu::MsLeft			
-				@player.fire unless @paused
-			end
-
-			if id == Gosu::KbP
-				@paused = !@paused
-			end
-		
+		if id == Gosu::KbP || id == Gosu::KbEscape
+			@paused = !@paused
+		end		
 	end
-
 end
 

@@ -1,6 +1,7 @@
 require 'gosu'
 require_relative 'main_menu_state'
 require_relative 'gameplay_state'
+require_relative 'gameplay_z_order'
 
 class GameWindow < Gosu::Window
 
@@ -15,11 +16,13 @@ class GameWindow < Gosu::Window
 		# I can lower the frame rate, but not increase
 
 		self.cursor = false
-
 		self.caption = "Flying Sheep Hunt"
 
+		# The background is shared for all states
+		@background_image = Gosu::Image.new(self, 'assets/background.png', false)
+
 		@last_update = Gosu::milliseconds
-		@delta = 0
+		@delta = 0		
 
 		set_state(MainMenuState.new(self))
 	end
@@ -45,6 +48,7 @@ class GameWindow < Gosu::Window
 
 	def draw
 		#puts Gosu::fps
+		@background_image.draw(0, 0, GameplayZOrder::Background)
 		@current_state.draw
 	end
 

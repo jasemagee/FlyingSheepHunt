@@ -9,14 +9,14 @@ class MainMenuState < StateBase
 	NORMAL_SIZE = 20
 	SELECTED_SIZE = 40
 	MENU_START_Y = 160
-	COLOR = 0xffffff00
+	COLOR = 0xff000000
 
 	def initialize(window)
 		super window
 
 		@title_font = Gosu::Font.new(@window, Gosu::default_font_name, 55)
-		@normal_font = Gosu::Font.new(@window, Gosu::default_font_name, 20)
-		@selected_font = Gosu::Font.new(@window, Gosu::default_font_name, 28)
+		@normal_font = Gosu::Font.new(@window, Gosu::default_font_name, 24)
+		@selected_font = Gosu::Font.new(@window, Gosu::default_font_name, 36)
 
 		@menu_items = Array.new
 		@menu_items.push(MenuItem.new(@window, "Start") { @window.set_state(GameplayState.new(@window)) })
