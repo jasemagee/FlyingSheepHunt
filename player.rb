@@ -1,4 +1,5 @@
 require 'gosu'
+require_relative 'gameplay_z_order'
 
 class Player
 
@@ -37,7 +38,7 @@ class Player
   end
 
   def draw
-    @image.draw(@x, @y, 3)
+    @image.draw(@x, @y, GameplayZOrder::Player)
   end
 
 end

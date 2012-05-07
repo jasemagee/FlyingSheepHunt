@@ -1,4 +1,5 @@
 require 'gosu'
+require_relative 'gameplay_z_order'
 
 class Sheep 
 
@@ -88,7 +89,7 @@ class Sheep
 					factor = 1
 					x_offset = 0
 				end
-				@sheep_image.draw(@x + x_offset, @y, 2, factor)
+				@sheep_image.draw(@x + x_offset, @y, GameplayZOrder::Sheep, factor)
 
 				#@window.draw_quad(
 				#	@x, @y, TOP_COLOR, # Top Left
@@ -97,7 +98,7 @@ class Sheep
 				#	@x + @sheep_image.width, @y + @sheep_image.height, TOP_COLOR, # Bottom Right
 				#	1)
 			else
-				@blood_splat_image.draw(@x, @y, 2)
+				@blood_splat_image.draw(@x, @y, GameplayZOrder::Splat)
 			end
 		end
 	end
