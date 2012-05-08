@@ -3,7 +3,7 @@ require_relative 'gameplay_z_order'
 
 class Sheep 
 
-	SPEED = 100
+	BASE_SPEED = 60
 
 	attr_accessor :alive, :spawned
 
@@ -66,7 +66,7 @@ class Sheep
 				end
 			end
 
-			@x += @direction * SPEED * delta
+			@x += @direction * (BASE_SPEED * @state.current_level_index) * delta
 		end
 
 		if !@alive && @spawned

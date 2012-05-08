@@ -7,6 +7,7 @@ class Player
   def initialize(state)
     @state = state
     @image = Gosu::Image.new(@state.window, "assets/crosshair.png", false)
+    @rifle_sound = Gosu::Sample.new(@state.window, "assets/rifle.wav")
     @x = @y = 0.0
     @move_speed = 5
     @half_width = (@image.width / 2)
@@ -14,6 +15,7 @@ class Player
   end
 
   def fire
+    @rifle_sound.play
     sheep_shot = @state.sheep.detect { |s| s.is_shot?(@x, @y) }
 
     if sheep_shot

@@ -14,7 +14,7 @@ class GameplayState < StateBase
 	GUI_COLOR = 0xff000000
 
 	attr_accessor :sheep
-	attr_reader :window, :time_playing
+	attr_reader :window, :time_playing, :current_level_index
 
 
 	def initialize(window)
