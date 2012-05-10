@@ -1,6 +1,7 @@
 require 'gosu'
 require_relative 'state_base'
 require_relative 'gameplay_state'
+require_relative 'top_scores_state'
 require_relative 'menu_item'
 
 class MainMenuState < StateBase
@@ -20,7 +21,7 @@ class MainMenuState < StateBase
 
 		@menu_items = Array.new
 		@menu_items.push(MenuItem.new(@window, "Start") { @window.set_state(GameplayState.new(@window)) })
-		@menu_items.push(MenuItem.new(@window, "Best Scores") { puts 'scores' })
+		@menu_items.push(MenuItem.new(@window, "Best Scores") { @window.set_state(TopScoresState.new(@window)) })
 		@menu_items.push(MenuItem.new(@window, "Exit") { @window.close })
 
 		@window.cursor = true
