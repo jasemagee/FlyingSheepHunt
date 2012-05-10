@@ -39,7 +39,7 @@ class GameplayState < StateBase
 
 		@time_playing = 0.0
 		@score = 0
-		@lives = 1
+		@lives = 10
 
 		@current_level_index = 1
 	end
