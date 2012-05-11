@@ -26,12 +26,18 @@ class TopScoresState < StateBase
 			1.0, 1.0, COLOR)
 
 		@top_scores.each_with_index do |(k,v), i|
-
-		@font_small.draw_rel("#{k}: #{v}", 
-			@window.width / 2, (START_Y) + (@font_large.height  * (i + 1)) , 0, #x, y, z
+			@font_small.draw_rel("#{i + 1}. #{k}: #{v}", 
+			@window.width / 2, (START_Y) + @font_large.height + (@font_small.height  * i) , 0, #x, y, z
 			0.5, 0.5, #rel_x, rel_y
 			1.0, 1.0, COLOR)			
 		end
+
+			@font_small.draw_rel('Esc to return', 
+			@window.width / 2, (START_Y) + @font_large.height + (@font_small.height  * (@top_scores.size + 1)) , 0, #x, y, z
+			0.5, 0.5, #rel_x, rel_y
+			1.0, 1.0, COLOR)		
+
+
 	end
 
 	def button_down(id)
