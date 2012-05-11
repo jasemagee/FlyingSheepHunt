@@ -1,14 +1,12 @@
 require 'gosu'
 
+require_relative 'shared'
 require_relative 'state_base'
 require_relative 'main_menu_state'
 require_relative 'top_scores_parser'
 
 
 class TopScoresState < StateBase
-
-	COLOR = 0xff000000
-	START_Y = 160
 
 	def initialize(window)
 		super window
@@ -21,21 +19,21 @@ class TopScoresState < StateBase
 
 	def draw	
 		@font_large.draw_rel("TOP SCORES", 
-			@window.width / 2, START_Y, 0, #x, y, z
+			@window.width / 2, Shared::START_Y, 0, #x, y, z
 			0.5, 0.5, #rel_x, rel_y
-			1.0, 1.0, COLOR)
+			1.0, 1.0, Shared::COLOR)
 
 		@top_scores.each_with_index do |(k,v), i|
 			@font_small.draw_rel("#{i + 1}. #{k}: #{v}", 
-			@window.width / 2, (START_Y) + @font_large.height + (@font_small.height  * i) , 0, #x, y, z
+			@window.width / 2, Shared::START_Y + @font_large.height + (@font_small.height  * i) , 0, #x, y, z
 			0.5, 0.5, #rel_x, rel_y
-			1.0, 1.0, COLOR)			
+			1.0, 1.0, Shared::COLOR)			
 		end
 
 			@font_small.draw_rel('Esc to return', 
-			@window.width / 2, (START_Y) + @font_large.height + (@font_small.height  * (@top_scores.size + 1)) , 0, #x, y, z
+			@window.width / 2, Shared::START_Y + @font_large.height + (@font_small.height  * (@top_scores.size + 1)) , 0, #x, y, z
 			0.5, 0.5, #rel_x, rel_y
-			1.0, 1.0, COLOR)		
+			1.0, 1.0, Shared::COLOR)		
 
 
 	end

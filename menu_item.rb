@@ -1,4 +1,6 @@
 require 'gosu'
+
+require_relative 'shared'
 require_relative 'main_menu_state'
 
 class MenuItem
@@ -14,7 +16,7 @@ class MenuItem
 	end
 
 	def draw(font)
-		font.draw(@text, self.x, self.y, 0, 1, 1, MainMenuState::COLOR)
+		font.draw(@text, self.x, self.y, 0, 1, 1, Shared::COLOR)
 	end
 
 	def mouse_over?(font, mouse_x, mouse_y)

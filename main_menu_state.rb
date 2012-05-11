@@ -1,4 +1,6 @@
 require 'gosu'
+
+require_relative 'shared'
 require_relative 'state_base'
 require_relative 'gameplay_state'
 require_relative 'top_scores_state'
@@ -9,8 +11,6 @@ class MainMenuState < StateBase
 	TITLE_SIZE = 55
 	NORMAL_SIZE = 20
 	SELECTED_SIZE = 40
-	MENU_START_Y = 160
-	COLOR = 0xff000000
 
 	def initialize(window)
 		super window
@@ -48,7 +48,7 @@ class MainMenuState < StateBase
 
 			menu_item_width = @menu_items[i].get_width(font)
 			x = (@window.width / 2) - (menu_item_width / 2)
-			y = MENU_START_Y + (i * @menu_items[i].get_height(@selected_font))
+			y = Shared::START_Y + (i * @menu_items[i].get_height(@selected_font))
 
 			@menu_items[i].x = x
 			@menu_items[i].y = y
@@ -60,7 +60,7 @@ class MainMenuState < StateBase
 		@title_font.draw_rel("Flying Sheep Hunt", 
 			@window.width / 2, 0, 0, #x, y, z
 			0.5, 0, #rel_x, rel_y
-			1.0, 1.0, COLOR)
+			1.0, 1.0, Shared::COLOR)
 		
 		@menu_items.each_index do |i| 
 			@menu_items[i].draw(i == @selected_index ? @selected_font : @normal_font) 

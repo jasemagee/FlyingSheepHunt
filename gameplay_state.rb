@@ -11,7 +11,6 @@ class GameplayState < StateBase
 	MAX_LEVEL = 15
 	SCORE_PER_KILL = 100
 	SECONDS_PER_LEVEL = 10
-	GUI_COLOR = 0xff000000
 
 	attr_accessor :sheep
 	attr_reader :window, :time_playing, :current_level_index
@@ -78,23 +77,23 @@ class GameplayState < StateBase
 		@gui_font.draw_rel("Lives: #{@lives}", 
 			@window.width, @window.height, GameplayZOrder::Gui, #x, y, z
 			1, 1, #rel_x, rel_y
-			1.0, 1.0, GUI_COLOR)
+			1.0, 1.0, Shared::COLOR)
 
 		# Draw score
 		@gui_font.draw_rel("Score: #{@score}", 
 			0, @window.height, GameplayZOrder::Gui, #x, y, z
 			0, 1, #rel_x, rel_y
-			1.0, 1.0, GUI_COLOR)
+			1.0, 1.0, Shared::COLOR)
 
 		if @paused
 			@gui_font.draw_rel('Paused', 
 			@window.width / 2, @window.height / 2, GameplayZOrder::Gui, #x, y, z
 			0.5, 0.5, #rel_x, rel_y
-			1.0, 1.0, GUI_COLOR)
+			1.0, 1.0, Shared::COLOR)
 			@gui_font.draw_rel('P to resume; Esc to exit', 
 			@window.width / 2, (@window.height / 2) + @gui_font.height, GameplayZOrder::Gui, #x, y, z
 			0.5, 0.5, #rel_x, rel_y
-			1.0, 1.0, GUI_COLOR)
+			1.0, 1.0, Shared::COLOR)
 		end
 	end
 

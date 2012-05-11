@@ -3,7 +3,6 @@ require_relative 'gameplay_z_order'
 
 class Player
 
-
   def initialize(state)
     @state = state
     @image = Gosu::Image.new(@state.window, "assets/crosshair.png", false)
