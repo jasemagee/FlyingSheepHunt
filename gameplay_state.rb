@@ -11,6 +11,7 @@ class GameplayState < StateBase
 	MAX_LEVEL = 15
 	SCORE_PER_KILL = 100
 	SECONDS_PER_LEVEL = 10
+	SHEEP_SPAWN_RATE = 0.5
 
 	attr_accessor :sheep
 	attr_reader :window, :time_playing, :current_level_index
@@ -36,7 +37,7 @@ class GameplayState < StateBase
 
 		@gui_font = Gosu::Font.new(@window, Gosu::default_font_name, 16)
 
-		@time_playing = 0.0
+		@time_since_spawn = @time_playing = 0.0
 		@score = 0
 		@lives = 10
 
@@ -49,6 +50,7 @@ class GameplayState < StateBase
 
 		if !@paused
 			@time_playing += delta
+			@time_since_spawn += delta
 
 			if @time_playing >= (SECONDS_PER_LEVEL * @current_level_index)
 				@current_level_index += 1
@@ -57,7 +59,9 @@ class GameplayState < StateBase
 
 			alive_sheep = @sheep.select { |s| s.alive }
 
-			if alive_sheep.size < (@current_level_index * SHEEP_INCREMENT)
+			if alive_sheep.size < (@current_level_index * SHEEP_INCREMENT) && @time_since_spawn >= SHEEP_SPAWN_RATE
+				@time_since_spawn = 0.0
+
 				match  = @sheep.detect { |s| !s.spawned }
 
 				if match
