@@ -1,4 +1,5 @@
 require 'gosu'
+
 require_relative 'gameplay_z_order'
 
 class Player
@@ -20,11 +21,6 @@ class Player
     if sheep_shot
       sheep_shot.kill
     end
-    # If enough time passed since last shot
-    # Play fire sound
-    # Reset last fire time
-    # Loop over sheep, finding any that are hit
-    # If hit, call sheep kill
   end
 
   def update(mouse_x, mouse_y)

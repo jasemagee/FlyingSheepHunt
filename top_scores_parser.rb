@@ -28,4 +28,5 @@ module TopScoresParser
 			YAML.dump(top_scores, out )
 		end
 	end
+	
 end

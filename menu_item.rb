@@ -39,4 +39,5 @@ class MenuItem
 	def get_height(font)
 		font.height
 	end
+	
 end

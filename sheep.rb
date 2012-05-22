@@ -1,4 +1,5 @@
 require 'gosu'
+
 require_relative 'gameplay_z_order'
 
 class Sheep 
@@ -91,6 +92,7 @@ class Sheep
 				end
 				@sheep_image.draw(@x + x_offset, @y, GameplayZOrder::Sheep, factor)
 
+				# Uncomment for a quad hit box
 				#@window.draw_quad(
 				#	@x, @y, TOP_COLOR, # Top Left
 				#	@x + @sheep_image.width, @y, TOP_COLOR, # Top Right

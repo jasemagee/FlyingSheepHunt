@@ -56,7 +56,6 @@ class MainMenuState < StateBase
 	end
 
 	def draw
-		# Title
 		@title_font.draw_rel("Flying Sheep Hunt", 
 			@window.width / 2, 0, 0, #x, y, z
 			0.5, 0, #rel_x, rel_y
@@ -72,13 +71,11 @@ class MainMenuState < StateBase
 			@window.close
 		end
 		if id == Gosu::MsLeft
-			clicked = @menu_items.detect { |item| 
-				item.mouse_over?(@normal_font, @window.mouse_x, @window.mouse_y) }
+			clicked = @menu_items.detect { |item| item.mouse_over?(@normal_font, @window.mouse_x, @window.mouse_y) }
 
-				if clicked
-					clicked.on_clicked
-				end
+			if clicked
+				clicked.on_clicked
 			end
 		end
-
 	end
+end

@@ -1,4 +1,5 @@
 require 'gosu'
+
 require_relative 'player'
 require_relative 'sheep'
 require_relative 'state_base'
@@ -16,7 +17,6 @@ class GameplayState < StateBase
 	attr_accessor :sheep
 	attr_reader :window, :time_playing, :current_level_index
 
-
 	def initialize(window)
 		super window
 
@@ -29,10 +29,9 @@ class GameplayState < StateBase
 		# and pass them into the sheep instances
 		@sheep_image = Gosu::Image.new(@window, "assets/sheep.png", false)
 		@blood_splat_image = Gosu::Image.new(@window, "assets/blood_splat.png", false)
+		
 		@sheep = Array.new
-
 		max_sheep_count = MAX_LEVEL * SHEEP_INCREMENT
-
 		(1..max_sheep_count).each { @sheep.push(Sheep.new(self, @sheep_image, @blood_splat_image)) }
 
 		@gui_font = Gosu::Font.new(@window, Gosu::default_font_name, 16)
@@ -40,7 +39,6 @@ class GameplayState < StateBase
 		@time_since_spawn = @time_playing = 0.0
 		@score = 0
 		@lives = 10
-
 		@current_level_index = 1
 	end
 
@@ -113,7 +111,6 @@ class GameplayState < StateBase
 	end
 
 	def button_down(id)
-
 		if @paused
 			if id == Gosu::KbEscape
 				@window.set_state(MainMenuState.new(@window))
@@ -128,5 +125,6 @@ class GameplayState < StateBase
 			@paused = !@paused
 		end		
 	end
+	
 end
 

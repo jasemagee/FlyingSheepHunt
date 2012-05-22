@@ -13,7 +13,6 @@ class GameoverState < StateBase
 
 		@font_large = Gosu::Font.new(@window, Gosu::default_font_name, 80)
 		@font_small = Gosu::Font.new(@window, Gosu::default_font_name, 20)
-
 		
 		@text_inputter =  Gosu::TextInput.new
 		@window.text_input = @text_inputter
@@ -44,15 +43,14 @@ class GameoverState < StateBase
 			@window.width / 2, (Shared::START_Y) + (@font_large.height * 2) + (@font_small.height * 2), 0, #x, y, z
 			0.5, 0.5, #rel_x, rel_y
 			1.0, 1.0, Shared::COLOR)
-end
-
-def button_down(id)
-	if id == Gosu::KbEnter || id == Gosu::KbReturn
-		TopScoresParser.add_if_fits_in_top_scores(@text_inputter.text, @score)
-		@window.text_input = nil
-		@window.set_state(MainMenuState.new(@window))
 	end
-end
 
+	def button_down(id)
+		if id == Gosu::KbEnter || id == Gosu::KbReturn
+			TopScoresParser.add_if_fits_in_top_scores(@text_inputter.text, @score)
+			@window.text_input = nil
+			@window.set_state(MainMenuState.new(@window))
+		end
+	end
 
 end

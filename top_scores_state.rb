@@ -34,8 +34,6 @@ class TopScoresState < StateBase
 			@window.width / 2, Shared::START_Y + @font_large.height + (@font_small.height  * (@top_scores.size + 1)) , 0, #x, y, z
 			0.5, 0.5, #rel_x, rel_y
 			1.0, 1.0, Shared::COLOR)		
-
-
 	end
 
 	def button_down(id)
@@ -43,6 +41,5 @@ class TopScoresState < StateBase
 			@window.set_state(MainMenuState.new(@window))
 		end
 	end
-	
 
 end

@@ -1,4 +1,5 @@
 require 'gosu'
+
 require_relative 'main_menu_state'
 require_relative 'gameplay_state'
 require_relative 'gameplay_z_order'
